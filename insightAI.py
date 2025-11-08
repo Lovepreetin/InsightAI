@@ -143,7 +143,7 @@ def train_model(X, y, problem_type):
                 }
             else:  # Regression
                 r2 = r2_score(y_test, y_pred)
-                rmse = mean_squared_error(y_test, y_pred, squared=False)
+                rmse = np.sqrt(mean_squared_error(y_test, y_pred))
                 results[name] = {
                     'model': model,
                     'r2': r2,
@@ -416,5 +416,6 @@ def plot_correlation(df):
     )
 
     return fig
+
 
 
