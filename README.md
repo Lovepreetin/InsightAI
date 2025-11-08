@@ -1,5 +1,5 @@
 # InsightAI
-Insight AI — A Streamlit-powered AI tool that automatically explores data, visualizes insights, runs ML models, and predicts future trends using Prophet.
+Insight AI — An AI Powered tool that automatically explores data, visualizes insights, runs ML models, and predicts future trends using Prophet.
 
 # 🤖 Insight AI — Automated Data Analysis & ML Web App
 **Live Demo:** 
