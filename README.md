@@ -19,7 +19,7 @@ Insight AI is an end-to-end tool to upload any CSV and instantly:
 - **Forecasting:** Prophet with seasonality, trend, ACF/PACF, rolling mean
 
 ## 🛠 Tech Stack
-Streamlit · scikit-learn · XGBoost · Prophet · Pandas · NumPy · Plotly · Matplotlib · Statsmodels
+scikit-learn · XGBoost · Prophet · Pandas · NumPy · Plotly · Matplotlib · Statsmodels · Streamlit
 
 ## 🚀 Run Locally
 ```bash
