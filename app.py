@@ -352,11 +352,11 @@ if uploaded_file is not None:
                             'Accuracy': f"{res['accuracy']:.4f}",
                             'F1 Score': f"{res['f1_score']:.4f}"
                         })
-                      perf_df = pd.DataFrame(perf_data)
-                      st.dataframe(perf_df, use_container_width=True)
+                    perf_df = pd.DataFrame(perf_data)
+                    st.dataframe(perf_df, use_container_width=True)
         
-                      best_model = max(results, key=lambda x: results[x]['accuracy'])
-                      st.success(f"**Best Model:** {best_model} (Accuracy = {results[best_model]['accuracy']:.4f})")
+                    best_model = max(results, key=lambda x: results[x]['accuracy'])
+                    st.success(f"**Best Model:** {best_model} (Accuracy = {results[best_model]['accuracy']:.4f})")
 
                 pdf_data = generate_pdf_report(perf_df, best_model, problem_type)
                 st.download_button(
@@ -796,6 +796,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
