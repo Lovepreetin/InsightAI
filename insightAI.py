@@ -98,7 +98,8 @@ def train_model(X, y, problem_type):
                 'Logistic Regression': LogisticRegression(max_iter=1000),
                 'Random Forest': RandomForestClassifier(n_estimators=200, random_state=42)
             }
-        else:  # Regression
+        else: 
+            # Regression
             models = {
                 'Linear Regression': LinearRegression(),
                 'Random Forest': RandomForestRegressor(
@@ -114,12 +115,16 @@ def train_model(X, y, problem_type):
                     random_state=42
                 ),
                 'XGBoost': XGBRegressor(
-                    n_estimators=300,
-                    learning_rate=0.05,
+                    n_estimators=1000,
+                    learning_rate=0.1,
                     subsample=0.8,
+                    max_depth= 6,
                     colsample_bytree=0.8,
+                    tree_method='hist',
                     random_state=42,
-                    verbosity=0
+                    n_jobs=-1,
+                    reg_lambda=1.0,
+                    verbose=false
                 )
             }
         
@@ -416,6 +421,7 @@ def plot_correlation(df):
     )
 
     return fig
+
 
 
 
