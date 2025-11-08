@@ -115,7 +115,7 @@ def train_model(X, y, problem_type):
                     random_state=42
                 ),
                 'XGBoost': XGBRegressor(
-                    n_estimators=1000,
+                    n_estimators=300,
                     learning_rate=0.1,
                     subsample=0.8,
                     max_depth= 6,
@@ -421,6 +421,7 @@ def plot_correlation(df):
     )
 
     return fig
+
 
 
 
