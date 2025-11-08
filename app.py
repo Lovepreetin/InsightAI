@@ -72,7 +72,7 @@ st.markdown('<div class="subtle-desc">Upload your dataset and let AI do the anal
 # Sidebar with file upload and sample options
 st.sidebar.header("📤 Upload Dataset")
 choice = st.sidebar.selectbox("Select an option:",
-               ["Upload your CSV", "Use Sample_general_insurance_data", "Use Sample_General_forecasting_of_Walmart"])
+               ["Upload your CSV", "Use Sample_insurance_data", "Use Sample_forecasting_of_Walmart"])
 if choice == "Upload your CSV":
     uploaded_file = st.sidebar.file_uploader("Upload CSV", type=["csv"])
     if uploaded_file is not None:
@@ -81,15 +81,15 @@ if choice == "Upload your CSV":
             st.sidebar.success("✅ File uploaded successfully!")
         except Exception as e:
             st.sidebar.error(f"Error reading file: {str(e)}")
-elif choice == "Use Sample_general_insurance_data":
+elif choice == "Use Sample_insurance_data":
     try:
-        uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_general_insurance_data.csv"))
+        uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_insurance_data.csv"))
         st.sidebar.success("✅ Loaded sample general dataset")
     except Exception as e:
         st.sidebar.error(f"Error loading sample data: {str(e)}")
-elif choice == "Use Sample_General_forecasting_of_Walmart":
+elif choice == "Use Sample_forecasting_of_Walmart":
     try:
-        uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_General_forecasting_of_Walmart.csv"))
+        uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_forecasting_of_Walmart.csv"))
         st.sidebar.success("✅ Loaded sample forecasting dataset")
     except Exception as e:
         st.sidebar.error(f"Error loading sample data: {str(e)}")
@@ -752,3 +752,4 @@ else:
 
     
 st.markdown("---")
+
