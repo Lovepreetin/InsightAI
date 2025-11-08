@@ -78,6 +78,11 @@ def prepare_data(df, target_col):
 def train_model(X, y, problem_type):
     """Train and evaluate models"""
     try:
+        X.dropna(inplace=True)
+        y.dropna(inplace=True)
+    except Exception as e:
+        raise Exception(f"Error in droping null values: {str(e)}")
+    try:
         # Split data
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.3, random_state=42
@@ -412,3 +417,4 @@ def plot_correlation(df):
     )
 
     return fig
+
