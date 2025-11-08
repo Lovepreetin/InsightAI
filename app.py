@@ -7,7 +7,7 @@ import plotly.express as px
 import time
 from insightAI import (detect_problem_type, prepare_data, train_model,
                    create_correlation_heatmap, create_prediction_plot, get_feature_importance,
-                   create_outlier_plot)
+                   create_outlier_plot,generate_pdf_report)
 
 # Page config
 st.set_page_config(page_title="InsightAI", page_icon="🤖", layout="wide")
@@ -796,6 +796,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
