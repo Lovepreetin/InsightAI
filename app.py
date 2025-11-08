@@ -329,49 +329,49 @@ if uploaded_file is not None:
 
                 if problem_type == 'Regression':
                     perf_data = []
-                        for name, res in results.items():
+                    for name, res in results.items():
                         perf_data.append({
                             'Model': name,
                             'R² Score': f"{res['r2']:.4f}",
                             'RMSE': f"{res['rmse']:.2f}"
                         })
-                perf_df = pd.DataFrame(perf_data)
-                st.dataframe(perf_df, use_container_width=True)
+                    perf_df = pd.DataFrame(perf_data)
+                    st.dataframe(perf_df, use_container_width=True)
         
-                best_model = max(results, key=lambda x: results[x]['r2'])
-                st.success(f"**Best Model:** {best_model} (R² = {results[best_model]['r2']:.4f})")
+                    best_model = max(results, key=lambda x: results[x]['r2'])
+                    st.success(f"**Best Model:** {best_model} (R² = {results[best_model]['r2']:.4f})")
   
-            else:  # Classification
-                perf_data = []
-                for name, res in results.items():
+                else:  # Classification
+                    perf_data = []
+                    for name, res in results.items():
                   
-                    perf_data.append({
-                        'Model': name,
-                        'Accuracy': f"{res['accuracy']:.4f}",
-                        'F1 Score': f"{res['f1_score']:.4f}"
-                    })
-                perf_df = pd.DataFrame(perf_data)
-                st.dataframe(perf_df, use_container_width=True)
+                        perf_data.append({
+                            'Model': name,
+                            'Accuracy': f"{res['accuracy']:.4f}",
+                            'F1 Score': f"{res['f1_score']:.4f}"
+                        })
+                      perf_df = pd.DataFrame(perf_data)
+                      st.dataframe(perf_df, use_container_width=True)
         
-                best_model = max(results, key=lambda x: results[x]['accuracy'])
-                st.success(f"**Best Model:** {best_model} (Accuracy = {results[best_model]['accuracy']:.4f})")
+                      best_model = max(results, key=lambda x: results[x]['accuracy'])
+                      st.success(f"**Best Model:** {best_model} (Accuracy = {results[best_model]['accuracy']:.4f})")
 
-            pdf_data = generate_pdf_report(perf_df, best_model, problem_type)
-            st.download_button(
-                label="📄 Download Report as PDF",
-                data=pdf_data,
-                file_name="InsightAI_Model_Report.pdf",
-                mime="application/pdf"
-            )
+                pdf_data = generate_pdf_report(perf_df, best_model, problem_type)
+                st.download_button(
+                    label="📄 Download Report as PDF",
+                    data=pdf_data,
+                    file_name="InsightAI_Model_Report.pdf",
+                    mime="application/pdf"
+                )
 
-            # Show prediction plot
-            st.subheader("Actual vs Predicted")
-            pred_fig = create_prediction_plot(
-                results[best_model]['actual'],
-                results[best_model]['predictions'],
-                best_model
-            )
-            st.plotly_chart(pred_fig, use_container_width=True)
+                # Show prediction plot
+                st.subheader("Actual vs Predicted")
+                pred_fig = create_prediction_plot(
+                    results[best_model]['actual'],
+                    results[best_model]['predictions'],
+                    best_model
+                )
+                st.plotly_chart(pred_fig, use_container_width=True)
 
                     # Feature Importance
                     feat_imp = get_feature_importance(results[best_model]['model'], X.columns)
