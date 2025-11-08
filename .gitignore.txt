@@ -1,0 +1,29 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+env.bak/
+.venv.bak/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Streamlit config and cache
+.streamlit/
+.cache/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Large data or model folders
+data/
+models/
