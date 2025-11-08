@@ -124,7 +124,7 @@ def train_model(X, y, problem_type):
                     random_state=42,
                     n_jobs=-1,
                     reg_lambda=1.0,
-                    verbose=false
+                    verbose=False
                 )
             }
         
@@ -421,6 +421,7 @@ def plot_correlation(df):
     )
 
     return fig
+
 
 
 
