@@ -298,6 +298,9 @@ if uploaded_file is not None:
             
             st.subheader("Select Target Column")
             target_col = st.selectbox("Choose target variable", df.columns.tolist())
+            if st.session_state.get("trained"):
+              st.success("✅ Model training completed successfully! You can now download the report below.")
+
 
             if st.button("Train Models", type="primary"):
               with st.spinner("Training models... Please wait."):
@@ -317,21 +320,21 @@ if uploaded_file is not None:
                 st.session_state["problem_type"] = problem_type
                 st.session_state["trained"] = True
 
-        # ✅ Now handle displaying results outside the button condition
-        if st.session_state.get("trained", False):
-            results = st.session_state["results"]
-            problem_type = st.session_state["problem_type"]
 
-            st.subheader("Model Performance")
+            if st.session_state.get("trained", False):
+                results = st.session_state["results"]
+                problem_type = st.session_state["problem_type"]
 
-            if problem_type == 'Regression':
-                perf_data = []
-                for name, res in results.items():
-                    perf_data.append({
-                        'Model': name,
-                        'R² Score': f"{res['r2']:.4f}",
-                        'RMSE': f"{res['rmse']:.2f}"
-                    })
+                st.subheader("Model Performance")
+
+                if problem_type == 'Regression':
+                    perf_data = []
+                        for name, res in results.items():
+                        perf_data.append({
+                            'Model': name,
+                            'R² Score': f"{res['r2']:.4f}",
+                            'RMSE': f"{res['rmse']:.2f}"
+                        })
                 perf_df = pd.DataFrame(perf_data)
                 st.dataframe(perf_df, use_container_width=True)
         
@@ -353,7 +356,6 @@ if uploaded_file is not None:
                 best_model = max(results, key=lambda x: results[x]['accuracy'])
                 st.success(f"**Best Model:** {best_model} (Accuracy = {results[best_model]['accuracy']:.4f})")
 
-            # ✅ PDF button now appears because data persists
             pdf_data = generate_pdf_report(perf_df, best_model, problem_type)
             st.download_button(
                 label="📄 Download Report as PDF",
@@ -785,6 +787,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
