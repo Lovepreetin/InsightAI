@@ -131,7 +131,7 @@ if uploaded_file is not None:
     try:
         with st.spinner('Loading your dataset...'):
           time.sleep(0.5)
-          df = uploaded_file().copy()
+          df = pd.read_csv(uploaded_file).copy()
             
         st.success(f"Data loaded successfully! Shape: {df.shape}")
         
@@ -751,6 +751,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
