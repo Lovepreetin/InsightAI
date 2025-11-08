@@ -84,12 +84,14 @@ if choice == "Upload your CSV":
 elif choice == "Use Sample_insurance_data":
     try:
         uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_general_insurance_data.csv"))
+        df = uploaded_file
         st.sidebar.success("✅ Loaded sample general dataset")
     except Exception as e:
         st.sidebar.error(f"Error loading sample data: {str(e)}")
 elif choice == "Use Sample_forecasting_of_Walmart":
     try:
         uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_General_forecasting_of_Walmart.csv"))
+        df = uploaded_file
         st.sidebar.success("✅ Loaded sample forecasting dataset")
     except Exception as e:
         st.sidebar.error(f"Error loading sample data: {str(e)}")
@@ -753,6 +755,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
