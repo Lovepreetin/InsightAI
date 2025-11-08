@@ -77,10 +77,20 @@ if choice == "Upload your CSV":
     if uploaded_file is not None:
         try:
             uploaded_file.seek(0)
-            df = pd.read_csv(uploaded_file)
-            st.sidebar.success("✅ File uploaded successfully!")
+            df = pd.read_csv(uploaded_file)  # Try UTF-8
+        except UnicodeDecodeError:
+            for enc in ['latin1', 'cp1252']:
+                try:
+                    uploaded_file.seek(0)
+                    df = pd.read_csv(uploaded_file, encoding=enc)
+                    break 
+                except Exception:
+                    continue
         except Exception as e:
-            st.sidebar.error(f"Error reading file: {str(e)}")
+            st.sidebar.error(f"❌ Error reading file: {str(e)}")
+            df = None
+        else:
+            st.sidebar.success("✅ File uploaded successfully!")
 elif choice == "Use Sample_insurance_data":
     try:
         uploaded_file = pd.read_csv(os.path.join("Datasets", "Sample_general_insurance_data.csv"))
