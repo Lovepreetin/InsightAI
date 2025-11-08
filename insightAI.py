@@ -62,6 +62,10 @@ def detect_problem_type(df, target_col):
 def prepare_data(df, target_col):
     """Prepare features and target for model training"""
     try:
+        df.dropna(inplace=True)
+    except Exception as e:
+        raise Exception(f"Error in droping null values: {str(e)}")
+    try:
         X = df.drop(columns=[target_col]).copy()
         y = df[target_col].copy()
         
@@ -77,11 +81,6 @@ def prepare_data(df, target_col):
 
 def train_model(X, y, problem_type):
     """Train and evaluate models"""
-    try:
-        X.dropna(inplace=True)
-        y.dropna(inplace=True)
-    except Exception as e:
-        raise Exception(f"Error in droping null values: {str(e)}")
     try:
         # Split data
         X_train, X_test, y_train, y_test = train_test_split(
@@ -417,4 +416,5 @@ def plot_correlation(df):
     )
 
     return fig
+
 
