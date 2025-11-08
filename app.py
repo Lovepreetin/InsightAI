@@ -299,29 +299,31 @@ if uploaded_file is not None:
             st.subheader("Select Target Column")
             target_col = st.selectbox("Choose target variable", df.columns.tolist())
             if st.session_state.get("trained"):
-              st.success("✅ Model training completed successfully! You can now download the report below.")
+                st.success("✅ Model training completed successfully! You can now download the report below.")
 
 
             if st.button("Train Models", type="primary"):
-              with st.spinner("Training models... Please wait."):
-                  # Detect problem type
+              
+                with st.spinner("Training models... Please wait."):
+                  
+                      # Detect problem type
                 
-                problem_type = detect_problem_type(df, target_col)
-                st.info(f"**Detected Problem Type:** {problem_type}")
+                    problem_type = detect_problem_type(df, target_col)
+                    st.info(f"**Detected Problem Type:** {problem_type}")
         
-                # Prepare data
-                X, y = prepare_data(df, target_col)
+                    # Prepare data
+                    X, y = prepare_data(df, target_col)
         
-                # Train models
-                results, scaler = train_model(X, y, problem_type)
+                    # Train models
+                    results, scaler = train_model(X, y, problem_type)
         
-                # Store results in session state so they persist
-                st.session_state["results"] = results
-                st.session_state["problem_type"] = problem_type
-                st.session_state["trained"] = True
-
-
+                    # Store results in session state so they persist
+                    st.session_state["results"] = results
+                    st.session_state["problem_type"] = problem_type
+                    st.session_state["trained"] = True
+                  
             if st.session_state.get("trained", False):
+              
                 results = st.session_state["results"]
                 problem_type = st.session_state["problem_type"]
 
@@ -363,7 +365,14 @@ if uploaded_file is not None:
                     file_name="InsightAI_Model_Report.pdf",
                     mime="application/pdf"
                 )
-
+                # Actual vs Predicted
+                st.subheader("Actual vs Predicted")
+                pred_fig = create_prediction_plot(
+                    results[best_model]["actual"],
+                    results[best_model]["predictions"],
+                    best_model,
+                )
+                st.plotly_chart(pred_fig, use_container_width=True)
                 # Show prediction plot
                 st.subheader("Actual vs Predicted")
                 pred_fig = create_prediction_plot(
@@ -373,28 +382,28 @@ if uploaded_file is not None:
                 )
                 st.plotly_chart(pred_fig, use_container_width=True)
 
-                    # Feature Importance
-                    feat_imp = get_feature_importance(results[best_model]['model'], X.columns)
-                    if feat_imp is not None:
-                        st.subheader("Feature Importance Analysis")
-                        with st.spinner("Analyzing feature importance..."):
-                            time.sleep(0.5)
-                            fig = px.bar(feat_imp.head(10), 
-                                       x='Importance', 
-                                       y='Feature', 
-                                       orientation='h',
-                                       title="Top 10 Most Important Features",
-                                       labels={'Importance': 'Relative Importance', 'Feature': 'Feature Name'},
-                                       color='Importance',
-                                       color_continuous_scale='blues')
-                            fig.update_layout(
-                                showlegend=False,
-                                title_x=0.5,
-                                title_font_size=18,
-                                plot_bgcolor='rgba(0,0,0,0)',
-                                paper_bgcolor='rgba(0,0,0,0)'
-                            )
-                            st.plotly_chart(fig, use_container_width=True)
+                # Feature Importance
+                feat_imp = get_feature_importance(results[best_model]['model'], X.columns)
+                if feat_imp is not None:
+                    st.subheader("Feature Importance Analysis")
+                    with st.spinner("Analyzing feature importance..."):
+                        time.sleep(0.5)
+                        fig = px.bar(feat_imp.head(10), 
+                                    x='Importance', 
+                                    y='Feature', 
+                                    orientation='h',
+                                    title="Top 10 Most Important Features",
+                                    labels={'Importance': 'Relative Importance', 'Feature': 'Feature Name'},
+                                    color='Importance',
+                                    color_continuous_scale='blues')
+                        fig.update_layout(
+                            showlegend=False,
+                            title_x=0.5,
+                            title_font_size=18,
+                            plot_bgcolor='rgba(0,0,0,0)',
+                            paper_bgcolor='rgba(0,0,0,0)'
+                        )
+                        st.plotly_chart(fig, use_container_width=True)
         
         # TAB 4: Clustering (KMeans)
         with tab4:
@@ -787,6 +796,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
