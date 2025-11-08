@@ -6,4 +6,5 @@ plotly
 scikit-learn
 xgboost
 prophet
+fpdf2
 statsmodels
