@@ -3,6 +3,7 @@ Insight AI — An AI Powered tool that automatically explores data, visualizes i
 
 # 🤖 Insight AI — Automated Data Analysis & ML Web App
 **Live Demo:** [https://insightai-6mzi2dcghbedqvduf4kyft.streamlit.app](https://insightai-6mzi2dcghbedqvduf4kyft.streamlit.app)
+
 Insight AI is an end-to-end tool to upload any CSV and instantly:
 - Summarize data (stats, nulls, shape)
 - Visualize (correlation heatmap, boxplots, distributions, outliers)
@@ -22,7 +23,7 @@ scikit-learn · XGBoost · Prophet · Pandas · NumPy · Plotly · Matplotlib ·
 
 ## 🚀 Run Locally
 ```bash
-git clone 
+git clone https://github.com/Lovepreetin/InsightAI
 cd InsightAI
 pip install -r requirements.txt
 streamlit run app.py
