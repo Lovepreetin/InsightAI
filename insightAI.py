@@ -137,25 +137,25 @@ def train_model(X, y, problem_type):
             
             # Calculate metrics
             if problem_type == 'Classification':
-            accuracy = accuracy_score(y_test, y_pred)
+                accuracy = accuracy_score(y_test, y_pred)
     
-            unique_labels = np.unique(y_test)
+                unique_labels = np.unique(y_test)
 
-            # If binary classification, find the correct positive label
-            if len(unique_labels) == 2:
-                # Use 'yes' if it exists, otherwise default to the last label
-                pos_label = 'yes' if 'yes' in unique_labels else unique_labels[-1]
-                f1 = f1_score(y_test, y_pred, pos_label=pos_label)
-            else:
-                f1 = f1_score(y_test, y_pred, average='weighted')
+                # If binary classification, find the correct positive label
+                if len(unique_labels) == 2:
+                    # Use 'yes' if it exists, otherwise default to the last label
+                    pos_label = 'yes' if 'yes' in unique_labels else unique_labels[-1]
+                    f1 = f1_score(y_test, y_pred, pos_label=pos_label)
+                else:
+                    f1 = f1_score(y_test, y_pred, average='weighted')
 
-            results[name] = {
-                'model': model,
-                'accuracy': accuracy,
-                'f1_score': f1,
-                'predictions': y_pred,
-                'actual': y_test
-            }
+                results[name] = {
+                    'model': model,
+                    'accuracy': accuracy,
+                    'f1_score': f1,
+                    'predictions': y_pred,
+                    'actual': y_test
+                }
 
             else:  # Regression
                 r2 = r2_score(y_test, y_pred)
@@ -432,6 +432,7 @@ def plot_correlation(df):
     )
 
     return fig
+
 
 
 
