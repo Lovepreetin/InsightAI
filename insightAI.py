@@ -12,7 +12,6 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.stattools import adfuller, acf, pacf
 from sklearn.cluster import KMeans
 from prophet import Prophet
-import shap
 
 def analyse_data(df):
     """Analyze the dataset and return basic statistics"""
@@ -411,4 +410,5 @@ def plot_correlation(df):
         height=600,
         width=800,
     )
+
     return fig
