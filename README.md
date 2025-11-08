@@ -19,7 +19,7 @@ Insight AI is an end-to-end tool to upload any CSV and instantly:
 - **Forecasting:** Prophet with seasonality, trend, ACF/PACF, rolling mean
 
 ##🖼️ Screenshots (Preview)
-<table align="center"> <tr> <td align="center"> <b>📊 Data Overview</b><br> <img src="Assets/Tab1/data_overview.png" width="450"> </td> <td align="center"> <b>📈 Visualizations</b><br> <img src="Assets/Tab2 imgs/visualization.png" width="450"> </td> </tr> <tr> <td align="center"> <b>🤖 Supervised Learning</b><br> <img src="Assets/Tab3/ML_Model.png" width="450"> </td> <td align="center"> <b>🧩 Clustering</b><br> <img src="Assets/Tab4/Clustering.png" width="450"> </td> </tr> <tr> <td colspan="2" align="center"> <b>🔮 Future Prediction</b><br> <img src="Assets/Tab5/Future_Prediction.png" width="600"> </td> </tr> </table>
+<table align="center"> <tr> <td align="center"> <b>📊 Data Overview</b><br> <img src="Assets/Tab1/data_overview.png" width="450"> </td> <td align="center"> <b>📈 Visualizations</b><br> <img src="Assets/Tab2/visualization.png" width="450"> </td> </tr> <tr> <td align="center"> <b>🤖 Supervised Learning</b><br> <img src="Assets/Tab3/ML_Model.png" width="450"> </td> <td align="center"> <b>🧩 Clustering</b><br> <img src="Assets/Tab4/Clustering.png" width="450"> </td> </tr> <tr> <td colspan="2" align="center"> <b>🔮 Future Prediction</b><br> <img src="Assets/Tab5/Future_Prediction.png" width="600"> </td> </tr> </table>
 ## 🛠 Tech Stack
 scikit-learn · XGBoost · Prophet · Pandas · NumPy · Plotly · Matplotlib · Statsmodels · Streamlit
 
