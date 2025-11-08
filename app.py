@@ -130,8 +130,10 @@ if uploaded_file is not None:
     # Load data
     try:
         with st.spinner('Loading your dataset...'):
-            time.sleep(0.5)
-            df = uploaded_file.copy()
+          time.sleep(0.5)
+          df = pd.read_csv(uploaded_file)
+          df = df.copy()
+            
         st.success(f"Data loaded successfully! Shape: {df.shape}")
         
         # Tabs
@@ -750,6 +752,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
