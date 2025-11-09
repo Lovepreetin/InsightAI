@@ -9,6 +9,9 @@ from insightAI import (detect_problem_type, prepare_data, train_model,
                    create_correlation_heatmap, create_prediction_plot, get_feature_importance,
                    create_outlier_plot,generate_pdf_report)
 
+def skey(*parts):
+    return "k_" + "_".join(str(p).replace(" ", "_") for p in parts)
+
 # Page config
 st.set_page_config(page_title="InsightAI", page_icon="🤖", layout="wide")
 st.markdown("""
@@ -253,18 +256,18 @@ if uploaded_file is not None:
                 st.subheader("Correlation Heatmap")
                 heatmap = create_correlation_heatmap(df)
                 if heatmap:
-                    st.plotly_chart(heatmap, use_container_width=True)
+                    st.plotly_chart(heatmap, use_container_width=True,key=skey('viz_heatmap'))
             
             if numeric_cols:
                 st.subheader("Distribution Plots")
                 selected_col = st.selectbox("Select column", numeric_cols)
                 fig = px.histogram(df, x=selected_col, marginal="box", title=f"Distribution of {selected_col}")
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True,key=skey('viz_hist',selected_col))
             if numeric_cols:
                 st.subheader("Outlier Analysis")
                 col_for_outliers = st.selectbox("Select column for outlier detection", numeric_cols, key='outlier_select')
                 outlier_fig, outliers = create_outlier_plot(df, col_for_outliers)
-                st.plotly_chart(outlier_fig, use_container_width=True)
+                st.plotly_chart(outlier_fig, use_container_width=True,key=skey('viz_outliers',col_for_outliers))
                 if not outliers.empty:
                     st.info(f"{len(outliers)} outliers detected in {col_for_outliers}")
                     with st.expander("Show outlier statistics"):
@@ -370,17 +373,9 @@ if uploaded_file is not None:
                 pred_fig = create_prediction_plot(
                     results[best_model]["actual"],
                     results[best_model]["predictions"],
-                    best_model,
-                )
-                st.plotly_chart(pred_fig, use_container_width=True)
-                # Show prediction plot
-                st.subheader("Actual vs Predicted")
-                pred_fig = create_prediction_plot(
-                    results[best_model]['actual'],
-                    results[best_model]['predictions'],
                     best_model
                 )
-                st.plotly_chart(pred_fig, use_container_width=True)
+                st.plotly_chart(pred_fig, use_container_width=True,key=skey('pred_scatter',problem_type,best_model))
 
                 # Feature Importance
                 feat_imp = get_feature_importance(results[best_model]['model'], X.columns)
@@ -403,7 +398,7 @@ if uploaded_file is not None:
                             plot_bgcolor='rgba(0,0,0,0)',
                             paper_bgcolor='rgba(0,0,0,0)'
                         )
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key=skey('feat_imp',problem_type,best_model))
         
         # TAB 4: Clustering (KMeans)
         with tab4:
@@ -491,7 +486,9 @@ if uploaded_file is not None:
                                     showlegend=True,
                                     legend_title_text="Groups"
                                 )
-                                st.plotly_chart(fig, use_container_width=True)
+                                st.plotly_chart(fig, use_container_width=True,
+                                                key=skey('cluster_scatter',
+                                                         n_clusters,tuple(used_features[:2])))
                                 
                                 # Show feature distributions by cluster
                                 st.markdown("### Feature Distributions by Cluster")
@@ -505,7 +502,8 @@ if uploaded_file is not None:
                                     y=selected_feature,
                                     title=f"Distribution of {selected_feature} by Cluster"
                                 )
-                                st.plotly_chart(fig_dist, use_container_width=True)
+                                st.plotly_chart(fig_dist, use_container_width=True,
+                                                key=skey('cluster_box',selected_feature,n_clusters))
                                 
                         except Exception as e:
                             st.error(f"Error during clustering: {str(e)}")
@@ -579,13 +577,13 @@ if uploaded_file is not None:
                         lags = st.slider("Number of lags", min_value=1, max_value=max_lags, value=min(40, max_lags))
                     if plot_type == "Trend":
                         fig = plot_trend(df_agg, date_col, target_col)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key=skey('ts_trend',date_col,target_col))
                     elif plot_type == "Seasonality":
                         fig = plot_seasonality(df_agg, date_col, target_col, freq)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key=skey('ts_seasonality',date_col,target_col))
                     elif plot_type == "Stationarity":
                         fig = plot_stationarity(df_agg, date_col, target_col)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key= skey('ts_stationarity',date_col,target_col))
                         adf = adf_test(df_agg, target_col)
                         st.write("ADF Statistic:", adf["ADF Statistic"])
                         st.write("p-value:", adf["p-value"])
@@ -601,13 +599,13 @@ if uploaded_file is not None:
                         st.plotly_chart(fig, use_container_width=True)
                     elif plot_type == "Autocorrelation (ACF)":
                         fig = plot_acf(df_agg, target_col, lags=lags)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key=skey('ts_acf',lags))
                     elif plot_type == "Partial Autocorrelation (PACF)":
                         fig = plot_pacf(df_agg, target_col, lags=lags)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key=skey('ts_pacf',lags))
                     elif plot_type == "Correlation Heatmap":
                         fig = plot_correlation(df_agg)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, use_container_width=True,key=skey('ts_corr_heatmap'))
                     elif plot_type == "Prophet Forecast":
                         # Validate date column format
                         try:
@@ -722,7 +720,7 @@ if uploaded_file is not None:
                                         )
                                     )
                                     
-                                    st.plotly_chart(fig, use_container_width=True)
+                                    st.plotly_chart(fig, use_container_width=True,key=skey('ts_prophet_forecast',target_col,periods,freq))
                                     
                                     # Add forecast interpretation
                                     st.markdown("""
@@ -796,6 +794,7 @@ else:
 
     
 st.markdown("---")
+
 
 
 
